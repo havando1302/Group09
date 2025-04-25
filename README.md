@@ -7,5 +7,5 @@
  - Đinh Đức Mạnh - MSSV: 23010029
  - Phạm Hồng Đức - MSSV: 23010341
 ## Công nghệ dự kiến sử dụng:
-\.CSDL: MongoDB/MySql
-\.Languages: JavaScipt, Python
+- CSDL: MongoDB/MySql
+- Languages: JavaScipt, Python
