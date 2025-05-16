@@ -1,5 +1,5 @@
 # Nhóm 09 Kỹ Thuật Phần Mềm
-## Tên đề tài: 
+## Tên đề tài: Hệ Thống Bán Gấu Bông Trực Tuyến
 ## Thành viên:
  - Hà Văn Đô - MSSV: 23010406
  - Lê Thị Dương - MSSV: 23010351
