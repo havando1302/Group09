@@ -1,5 +1,5 @@
-# Nhóm 09 Kỹ Thuật Phần Mềm
-## Tên đề tài: Hệ Thống Bán Gấu Bông Trực Tuyến
+# Nhóm 09 Kỹ Thuật Phần Mềm 
+## Tên đề tài: Hệ Thống Bán Gấu Bông Trực Tuyến (Teddy paradise)
 ## Thành viên:
  - Hà Văn Đô - MSSV: 23010406
  - Lê Thị Dương - MSSV: 23010351
