@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Cart;
+use App\Models\Product; 
 use Illuminate\Http\Request;
 use App\Notifications\OrderCancelled;
+
 class OrderController extends Controller
 {
     public function __construct()
@@ -55,7 +57,7 @@ class OrderController extends Controller
             'status' => 'pending',
         ]);
 
-        // Tạo chi tiết đơn hàng
+        // Tạo chi tiết đơn hàng và cập nhật tồn kho
         foreach ($cartItems as $item) {
             if (!$item->product) continue; // Bỏ qua sản phẩm không tồn tại
 
@@ -64,9 +66,19 @@ class OrderController extends Controller
                 'product_id' => $item->product_id,
                 'quantity' => $item->quantity,
                 'price' => $item->product->price ?? 0,
-                'size' => $item->size ?? null,
-                'color' => $item->color ?? null,
+                'size_id' => $item->size_id,
+                'color_id' => $item->color_id,
             ]);
+            
+
+            // Giảm tồn kho sản phẩm
+            $product = $item->product;
+            if ($product->stock >= $item->quantity) {
+                $product->stock -= $item->quantity;
+                $product->save();
+            } else {
+                // Có thể xử lý lỗi tồn kho không đủ ở đây nếu cần
+            }
         }
 
         // Xóa giỏ hàng
@@ -79,10 +91,11 @@ class OrderController extends Controller
      * Danh sách đơn hàng (admin)
      */
     public function index()
-    {
-        $orders = Order::with('user')->latest()->get();
-        return view('admin.orders.index', compact('orders'));
-    }
+{
+    $orders = Order::with(['user', 'items.size', 'items.color', 'items.product'])->latest()->get();
+    return view('admin.orders.index', compact('orders'));
+}
+
 
     /**
      * Trang chỉnh sửa đơn hàng (admin)
@@ -111,6 +124,17 @@ class OrderController extends Controller
         $oldStatus = $order->status;
 
         $order->update($validated);
+
+        // Nếu trạng thái chuyển sang cancelled, hoàn trả tồn kho
+        if ($order->status === 'cancelled' && $oldStatus !== 'cancelled') {
+            foreach ($order->items as $item) {
+                $product = $item->product;
+                if ($product) {
+                    $product->stock += $item->quantity;
+                    $product->save();
+                }
+            }
+        }
 
         // Gửi thông báo nếu trạng thái thay đổi
         if ($order->status !== $oldStatus && $order->user) {

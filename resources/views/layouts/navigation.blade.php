@@ -61,10 +61,9 @@
     </div>
 
     <nav class="header_navbar">
-       <a href="/" class="header_navbar-logo">
-                <img src="{{ asset('storage/products/Gemini_Generated_Image_krh9ixkrh9ixkrh9.jpg') }}">
-            </a>
-
+        <a href="/" class="header_navbar-logo">
+            <img src="{{ asset('storage/products/Gemini_Generated_Image_krh9ixkrh9ixkrh9.jpg') }}">
+        </a>
 
         <ul class="header_navbar-list">
             @auth
@@ -73,8 +72,6 @@
                     <li class="header_navbar-item"><a href="{{ route('admin.products.index') }}">Sản phẩm</a></li>
                 @else
                     <li class="header_navbar-item"><a href="{{ route('home') }}">Trang chủ</a></li>
-
-                    {{-- Menu sản phẩm + submenu danh mục con --}}
                     <li class="header_navbar-item header_navbar-dropdown">
                         <a href="{{ route('products.index') }}">Sản phẩm <span class="dropdown-icon">&#9776;</span></a>
                         @if(!empty($childCategories) && $childCategories->count())
@@ -91,8 +88,7 @@
                     </li>
                 @endif
             @else
-                <li class="header_navbar-item"><a href="{{ route('products.indexPublic') }}">Trang chủ</a></li>
-
+            <li class="header_navbar-item"><a href="{{ route('home') }}">Trang chủ</a></li>
                 <li class="header_navbar-item header_navbar-dropdown">
                     <a href="{{ route('products.index') }}">Sản phẩm <span class="dropdown-icon">&#9776;</span></a>
                     @if(!empty($childCategories) && $childCategories->count())
@@ -110,7 +106,17 @@
             @endauth
 
             <li class="header_navbar-item"><a href="{{ url('/introduce') }}">Giới thiệu</a></li>
-            <li class="header_navbar-item"><a href="{{ url('/contact') }}">Liên hệ</a></li>
+
+            {{-- Sửa phần Liên hệ để phân biệt admin và user --}}
+            @auth
+                @if(auth()->user()->is_admin)
+                <li class="header_navbar-item"><a href="{{ route('admin.contacts.index') }}">Liên hệ</a></li>
+                @else
+                    <li class="header_navbar-item"><a href="{{ route('contact.index') }}">Liên hệ</a></li>
+                @endif
+            @else
+                <li class="header_navbar-item"><a href="{{ route('contact.index') }}">Liên hệ</a></li>
+            @endauth
         </ul>
 
         <div class="header_navbar-btn">
@@ -170,7 +176,6 @@
 </header>
 
 <script>
-    // Hiển thị/ẩn ô tìm kiếm khi click icon
     const searchBtn = document.getElementById('searchBtn');
     const searchBox = document.getElementById('searchBox');
 
@@ -190,7 +195,6 @@
         }
     });
 
-    // Xử lý mở/đóng submenu khi click icon dropdown
     document.querySelectorAll('.dropdown-icon').forEach(icon => {
         icon.addEventListener('click', function (e) {
             e.preventDefault();
@@ -198,19 +202,16 @@
             const parentLi = this.closest('.header_navbar-dropdown');
             const submenu = parentLi.querySelector('.header_navbar-submenu');
 
-            // Ẩn tất cả submenu khác
             document.querySelectorAll('.header_navbar-submenu').forEach(menu => {
                 if (menu !== submenu) {
                     menu.style.display = 'none';
                 }
             });
 
-            // Toggle submenu hiện tại
             submenu.style.display = (submenu.style.display === 'block') ? 'none' : 'block';
         });
     });
 
-    // Ẩn submenu khi click ra ngoài
     document.addEventListener('click', function () {
         document.querySelectorAll('.header_navbar-submenu').forEach(menu => {
             menu.style.display = 'none';

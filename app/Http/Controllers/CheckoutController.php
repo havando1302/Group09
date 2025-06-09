@@ -61,8 +61,11 @@ class CheckoutController extends Controller
                     'product_id' => $item->product_id,
                     'quantity' => $item->quantity,
                     'price' => $item->product->price ?? 0,
+                    'color_id' => $item->color_id ?? null,
+                    'size_id' => $item->size_id ?? null,
                 ]);
             }
+            
     
             // Xóa giỏ hàng của user sau khi đặt hàng thành công
             \App\Models\Cart::where('user_id', $userId)->delete();

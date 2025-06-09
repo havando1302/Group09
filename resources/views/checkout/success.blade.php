@@ -6,7 +6,7 @@
     <p class="text-gray-700 text-lg mb-6">
         {{ session('message') ?? 'Cảm ơn bạn đã đặt hàng. Chúng tôi sẽ xử lý đơn hàng sớm nhất.' }}
     </p>
-    <a href="{{ route('products.indexPublic') }}"
+    <a href="{{ route('products.index') }}"
    class="inline-block px-6 py-3 text-black bg-green-500 rounded-md shadow hover:bg-green-600 transition">
     Tiếp tục mua sắm
 </a>

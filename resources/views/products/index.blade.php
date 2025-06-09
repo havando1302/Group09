@@ -22,6 +22,9 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
 
     .product-card:hover {
@@ -42,6 +45,7 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
+        display: block;
     }
 
     .btn-add-to-cart {
@@ -49,6 +53,11 @@
         color: white;
         font-weight: 600;
         transition: background 0.3s ease, transform 0.2s;
+        width: 100%;
+        padding: 0.5rem 0;
+        border-radius: 0.375rem;
+        border: none;
+        cursor: pointer;
     }
 
     .btn-add-to-cart:hover {
@@ -61,10 +70,33 @@
         color: white;
         font-weight: 600;
         transition: background 0.3s ease;
+        display: block;
+        width: 100%;
+        padding: 0.5rem 0;
+        text-align: center;
+        border-radius: 0.375rem;
+        text-decoration: none;
     }
 
     .btn-login:hover {
         background: linear-gradient(to right, #7c3aed, #4338ca);
+    }
+
+    .variant-label {
+        display: inline-block;
+        padding: 2px 8px;
+        border-radius: 0.25rem;
+        background-color: #e0e7ff;
+        color: #1e3a8a;
+        font-size: 0.875rem;
+        margin-right: 6px;
+        margin-top: 4px;
+        user-select: none;
+    }
+
+    .variant-label.size {
+        background-color: #bfdbfe;
+        color: #1e40af;
     }
 </style>
 
@@ -73,24 +105,18 @@
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
         @forelse($products as $product)
-        <div class="product-card rounded-lg shadow-lg p-4 hover:shadow-xl transition-shadow">
-            <div>
+            <div class="product-card">
                 @php
                     $defaultImageUrl = asset('images/default-product.png');
                 @endphp
 
-                {{-- Bọc phần ảnh và tên sản phẩm trong thẻ <a> để click được --}}
                 <a href="{{ route('products.show', $product->id) }}" class="block hover:underline">
                     <div class="product-image-container">
                         @if(!empty($product->image_url) && Storage::disk('public')->exists($product->image_url))
-                            <img
-                                src="{{ asset('storage/' . $product->image_url) }}"
-                                alt="{{ $product->name }}"
-                                onerror="this.onerror=null; this.src='{{ $defaultImageUrl }}';">
+                            <img src="{{ asset('storage/' . $product->image_url) }}" alt="{{ $product->name }}"
+                                 onerror="this.onerror=null; this.src='{{ $defaultImageUrl }}';">
                         @else
-                            <img
-                                src="{{ $defaultImageUrl }}"
-                                alt="{{ $product->name }}">
+                            <img src="{{ $defaultImageUrl }}" alt="{{ $product->name }}">
                         @endif
                     </div>
 
@@ -98,24 +124,47 @@
                 </a>
 
                 <p class="text-gray-600">{{ number_format($product->price) }} VNĐ</p>
-                <p class="text-sm text-gray-500">Còn {{ $product->stock }} sản phẩm</p>
-            </div>
+                @php
+                  $totalStock = $product->variants->sum('stock');
+                    @endphp
+                    <p class="text-sm text-gray-500">Còn {{ $totalStock }} sản phẩm</p>
 
-            <div class="mt-4">
+
+                @if($product->variants->count())
+                    <div class="mt-2">
+                        <p class="text-sm font-medium text-gray-700">Màu sắc:</p>
+                        <div class="flex flex-wrap">
+                            {{-- Lấy danh sách color_name duy nhất --}}
+                            @foreach($product->variants->pluck('color_name')->unique() as $color)
+                                <span class="variant-label">{{ $color }}</span>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <div class="mt-2">
+                        <p class="text-sm font-medium text-gray-700">Kích cỡ:</p>
+                        <div class="flex flex-wrap">
+                            {{-- Lấy danh sách size_name duy nhất --}}
+                            @foreach($product->variants->pluck('size_name')->unique() as $size)
+                                <span class="variant-label size">{{ $size }}</span>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+
+                <div class="mt-4">
                 @auth
-                    <form action="{{ route('cart.add', $product) }}" method="POST" class="mt-2">
-                        @csrf
-                        <button type="submit" class="btn-add-to-cart px-4 py-2 rounded w-full">
-                            Thêm vào giỏ hàng
-                        </button>
-                    </form>
-                @else
-                    <a href="{{ route('login') }}" class="btn-login px-4 py-2 rounded w-full text-center block mt-2">
-                        Đăng nhập để mua hàng
-                    </a>
-                @endauth
+    <a href="{{ route('products.show', $product->id) }}" class="btn-add-to-cart text-center block mt-2">
+        Thêm vào giỏ hàng
+    </a>
+@else
+    <a href="{{ route('login') }}" class="btn-login mt-2">
+        Đăng nhập để mua hàng
+    </a>
+@endauth
+
+                </div>
             </div>
-        </div>
         @empty
             <p class="col-span-full text-center text-gray-500">Không có sản phẩm nào để hiển thị.</p>
         @endforelse
