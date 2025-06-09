@@ -13,9 +13,10 @@ class OrderController extends Controller
 {
     public function __construct()
     {
-        // Chỉ admin được quản lý đơn hàng, ngoại trừ 'checkout'
-        $this->middleware('admin')->except(['checkout']);
+        // Bỏ qua middleware admin cho 'checkout' và 'success'
+        $this->middleware('admin')->except(['checkout', 'success']);
     }
+    
 
     /**
      * Xử lý đặt hàng từ giỏ hàng
@@ -86,6 +87,11 @@ class OrderController extends Controller
 
         return redirect()->route('checkout.success')->with('message', 'Đặt hàng thành công!');
     }
+    public function success()
+{
+    return view('checkout.success');
+}
+
 
     /**
      * Danh sách đơn hàng (admin)
