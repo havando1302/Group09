@@ -5,7 +5,7 @@
     .variant-label {
     display: inline-block;
     padding: 5px 12px;
-    border-radius: 9999px; /* bo tròn pill */
+    border-radius: 9999px;
     background-color: #e0e7ff; /* xanh nhẹ */
     color: #1e3a8a; /* xanh đậm */
     font-size: 0.875rem;
