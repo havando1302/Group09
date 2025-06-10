@@ -57,61 +57,82 @@
             <label for="image_url" class="block text-sm font-medium text-gray-700">Hình ảnh</label>
             <input type="file" name="image_url" id="image_url" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
         </div>
-
         {{-- Biến thể sản phẩm --}}
-        <div class="mb-4">
-            <label class="block text-lg font-bold text-gray-800 mb-2">Biến thể sản phẩm</label>
-            <div id="variant-container">
-                <div class="variant-group grid grid-cols-3 gap-4 mb-2">
-                    <div>
-                        <label>Màu (nhập tên màu)</label>
-                        <input type="text" name="variants[0][color_name]" class="w-full border rounded" required>
-                    </div>
-
-                    <div>
-                        <label>Size (nhập tên size)</label>
-                        <input type="text" name="variants[0][size_name]" class="w-full border rounded" required>
-                    </div>
-
-                    <div>
-                        <label>Số lượng</label>
-                        <input type="number" name="variants[0][stock]" class="w-full border rounded" min="0" required>
-                    </div>
+<div class="mb-4">
+    <label class="block text-lg font-bold text-gray-800 mb-2">Biến thể sản phẩm</label>
+    <div id="variant-container">
+        @foreach(old('variants', [[]]) as $i => $variant)
+            <div class="variant-group grid grid-cols-4 gap-4 mb-2 items-end" data-index="{{ $i }}">
+                <input type="hidden" name="variants[{{ $i }}][id]" value="{{ $variant['id'] ?? '' }}">
+                <div>
+                    <label>Màu (nhập tên màu)</label>
+                    <input type="text" name="variants[{{ $i }}][color_name]" class="w-full border rounded" required value="{{ $variant['color_name'] ?? '' }}">
+                </div>
+                <div>
+                    <label>Size (nhập tên size)</label>
+                    <input type="text" name="variants[{{ $i }}][size_name]" class="w-full border rounded" required value="{{ $variant['size_name'] ?? '' }}">
+                </div>
+                <div>
+                    <label>Số lượng</label>
+                    <input type="number" name="variants[{{ $i }}][stock]" class="w-full border rounded" min="0" required value="{{ $variant['stock'] ?? 0 }}">
+                </div>
+                <div>
+                    <button type="button" class="remove-variant-button bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">Xóa</button>
                 </div>
             </div>
+        @endforeach
+    </div>
+    <button type="button" id="add-variant-button" class="mt-2 text-blue-600 hover:underline">+ Thêm biến thể</button>
+</div>
 
-            <button type="button" onclick="addVariant()" class="mt-2 text-blue-600 hover:underline">+ Thêm biến thể</button>
-        </div>
-
-        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Lưu sản phẩm</button>
-    </form>
+<div class="mt-6">
+    <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
+        Tạo sản phẩm
+    </button>
 </div>
 
 <script>
-    let variantIndex = 1;
+    let variantIndex = {{ count(old('variants', [[]])) }};
 
-    function addVariant() {
-        const container = document.getElementById('variant-container');
-        const html = `
-            <div class="variant-group grid grid-cols-3 gap-4 mb-2">
+    function createVariantGroup(index, data = {}) {
+        return `
+            <div class="variant-group grid grid-cols-4 gap-4 mb-2 items-end" data-index="${index}">
+                <input type="hidden" name="variants[${index}][id]" value="${data.id ?? ''}">
+                
                 <div>
                     <label>Màu (nhập tên màu)</label>
-                    <input type="text" name="variants[${variantIndex}][color_name]" class="w-full border rounded" required>
+                    <input type="text" name="variants[${index}][color_name]" class="w-full border rounded" required value="${data.color_name ?? ''}">
                 </div>
 
                 <div>
                     <label>Size (nhập tên size)</label>
-                    <input type="text" name="variants[${variantIndex}][size_name]" class="w-full border rounded" required>
+                    <input type="text" name="variants[${index}][size_name]" class="w-full border rounded" required value="${data.size_name ?? ''}">
                 </div>
 
                 <div>
                     <label>Số lượng</label>
-                    <input type="number" name="variants[${variantIndex}][stock]" class="w-full border rounded" min="0" required>
+                    <input type="number" name="variants[${index}][stock]" class="w-full border rounded" min="0" required value="${data.stock ?? 0}">
+                </div>
+
+                <div>
+                    <button type="button" class="remove-variant-button bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">Xóa</button>
                 </div>
             </div>
         `;
-        container.insertAdjacentHTML('beforeend', html);
-        variantIndex++;
     }
+
+    document.getElementById('add-variant-button').addEventListener('click', () => {
+        const container = document.getElementById('variant-container');
+        container.insertAdjacentHTML('beforeend', createVariantGroup(variantIndex));
+        variantIndex++;
+    });
+
+    document.getElementById('variant-container').addEventListener('click', function(e) {
+        if (e.target.classList.contains('remove-variant-button')) {
+            e.target.closest('.variant-group').remove();
+        }
+    });
 </script>
+
+
 @endsection
