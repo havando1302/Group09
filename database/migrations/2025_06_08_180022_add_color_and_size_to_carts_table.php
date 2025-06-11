@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up()
     {
-        // Thêm cột color_id nếu chưa có
+       
         if (!Schema::hasColumn('carts', 'color_id')) {
             Schema::table('carts', function (Blueprint $table) {
                 $table->unsignedBigInteger('color_id')->nullable();
@@ -18,7 +18,7 @@ return new class extends Migration
             });
         }
 
-        // Thêm cột size_id nếu chưa có
+      
         if (!Schema::hasColumn('carts', 'size_id')) {
             Schema::table('carts', function (Blueprint $table) {
                 $table->unsignedBigInteger('size_id')->nullable();
