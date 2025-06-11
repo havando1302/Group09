@@ -17,16 +17,9 @@ use App\Http\Controllers\Admin\ContactController;
 |--------------------------------------------------------------------------
 */
 
-// Trang chủ cho tất cả mọi người (guest hoặc đã đăng nhập)
 Route::get('/', [HomeController::class, 'userHome'])->name('home');
-
-// Trang danh sách sản phẩm và chi tiết sản phẩm
 Route::resource('products', ProductController::class)->only(['index', 'show']);
-
-// Trang giới thiệu
 Route::view('/introduce', 'introduce')->name('introduce');
-
-// Trang liên hệ (dành cho người dùng xem contact từ admin tạo)
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
 
 /*
@@ -35,7 +28,6 @@ Route::get('/contact', [ContactController::class, 'index'])->name('contact.index
 |--------------------------------------------------------------------------
 */
 Route::middleware('auth')->group(function () {
-
     // Thông báo
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
     Route::patch('/notifications/{id}/read', function ($id) {
@@ -49,10 +41,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
     Route::post('/cart/update/{productId}', [CartController::class, 'update'])->name('cart.update');
-  // Đăt hàng
-  Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.form');
-  Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
-  Route::get('/checkout/success', [OrderController::class, 'success'])->name('checkout.success');
+
+    // Đặt hàng
+    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.form');
+    Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
+    Route::get('/checkout/success', [OrderController::class, 'success'])->name('checkout.success');
+
+    // Hủy đơn hàng
+    Route::patch('/orders/{order}/cancel', [OrderController::class, 'cancel'])->name('orders.cancel');
 
     /*
     |--------------------------------------------------------------------------
@@ -60,25 +56,15 @@ Route::middleware('auth')->group(function () {
     |--------------------------------------------------------------------------
     */
     Route::prefix('admin')
-    ->middleware(['auth', 'admin'])  
-    ->name('admin.')
-    ->group(function () {
-
-        // Trang dashboard
-        Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
-
-        // Quản lý sản phẩm
-        Route::resource('products', ProductController::class);
-
-        // Quản lý danh mục
-        Route::resource('categories', CategoryController::class);
-
-        // Quản lý đơn hàng
-        Route::resource('orders', OrderController::class);
-
-        // Quản lý liên hệ (thông tin công ty, hotline, facebook, v.v.)
-        Route::resource('contacts', ContactController::class);
-    });
+        ->middleware(['auth', 'admin'])
+        ->name('admin.')
+        ->group(function () {
+            Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+            Route::resource('products', ProductController::class);
+            Route::resource('categories', CategoryController::class);
+            Route::resource('orders', OrderController::class);
+            Route::resource('contacts', ContactController::class);
+        });
 });
 
 /*

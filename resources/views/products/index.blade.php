@@ -101,7 +101,7 @@
 </style>
 
 <div class="container mx-auto p-6">
-    <h1 class="page-title text-3xl font-baloo mb-6 text-center text-gray-800">Thời trang mới Đồ áo xinh</h1>
+    <h1 class="page-title text-3xl font-baloo mb-6 text-center text-gray-800">THIÊN ĐƯỜNG CỦA NHỮNG CHÚ GẤU</h1>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
         @forelse($products as $product)
