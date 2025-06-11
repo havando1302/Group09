@@ -3,8 +3,22 @@
 @section('title', "Chi tiết sản phẩm - {$product->name} | Teddy Paradise")
 
 @section('content')
+@if (session('success'))
+    <div class="alert alert-success" style="
+        background-color: #d4edda; 
+        color: #155724; 
+        border: 1px solid #c3e6cb; 
+        padding: 15px; 
+        margin-bottom: 20px; 
+        border-radius: 5px;
+        text-align: center;
+        font-weight: bold;
+    ">
+        {{ session('success') }}
+    </div>
+@endif
+
 <style>
-    /* --- CSS cơ bản, bạn giữ nguyên hoặc sửa theo ý --- */
     .grid { max-width: 1200px; margin: 0 auto; padding: 20px; }
     .product_page { display: flex; flex-wrap: wrap; gap: 40px; margin-top: 30px; }
     .product_page-introduce { flex: 2; display: flex; gap: 20px; flex-wrap: wrap; }
@@ -15,17 +29,14 @@
     .subdivider { margin: 0 5px; }
     .product_page-intro-header { font-size: 2rem; font-weight: 700; margin-bottom: 10px; }
     .intro_line { border-bottom: 1px solid #ddd; margin: 15px 0; }
-    .product_intro-price { font-size: 1.8rem; font-weight: 700; color: #e63946; margin-bottom: 15px; }
     .product_page-intro-text { font-size: 1.2rem; color: #333; margin-bottom: 25px; }
     select { font-size: 1.2rem; padding: 8px 12px; border-radius: 6px; border: 1px solid #ccc; width: 100%; }
     .product_intro-count { display: flex; align-items: center; gap: 10px; }
     .product_intro-count-btn { font-size: 1.5rem; background-color: #e63946; color: white; border: none; width: 35px; height: 35px; border-radius: 6px; cursor: pointer; user-select: none; }
     .product_intro-count-value { width: 60px; font-size: 1.2rem; text-align: center; padding: 5px; border: 1px solid #ccc; border-radius: 6px; }
-    /* Vô hiệu hoá các nút và input */
     .product_intro-count-btn:disabled, input[type="number"]:disabled { background-color: #ccc; cursor: not-allowed; }
     .product_btn-addtocart { margin-top: 20px; background-color: #1d3557; color: white; padding: 12px; font-size: 1.2rem; font-weight: 700; border: none; border-radius: 8px; width: 100%; cursor: pointer; transition: background-color 0.3s; }
     .product_btn-addtocart:hover { background-color: #457b9d; }
-    /* Kiểu dáng cho nút bị vô hiệu hoá */
     .product_btn-addtocart:disabled { background-color: #a9a9a9; cursor: not-allowed; }
     .product_intro-share { margin-top: 40px; }
     .product_intro-share-header { font-weight: 700; margin-bottom: 10px; }
@@ -38,6 +49,46 @@
     .product_page-description-item p { margin-bottom: 10px; line-height: 1.5; }
     .product_page-description-item ul { padding-left: 20px; }
     .product_page-description-item ul li { margin-bottom: 8px; }
+
+    .price-container {
+        display: flex;
+        align-items: baseline;
+        margin-bottom: 15px;
+    }
+
+    .current-price {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #e63946;
+        margin-right: 10px;
+    }
+
+    .original-price-strike {
+        text-decoration: line-through;
+        color: #999;
+        font-size: 1.2rem;
+        margin-right: 10px;
+    }
+
+    .discount-percentage {
+        background-color: #e63946;
+        color: white;
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        font-weight: bold;
+    }
+
+    .sold-quantity {
+        font-size: 1.1rem;
+        color: #555;
+        margin-bottom: 15px;
+    }
+
+    .sold-quantity span {
+        font-weight: bold;
+        color: #1d3557;
+    }
 
     @media (max-width: 768px) {
         .product_page, .product_page-introduce { flex-direction: column; }
@@ -76,7 +127,21 @@
                 @endcan
 
                 <div class="intro_line"></div>
-                <p class="product_intro-price">{{ number_format($product->price, 0, ',', '.') }}₫</p>
+                
+                @php
+                    $currentPrice = $product->price;
+                    $originalPrice = $currentPrice / (1 - 0.15);
+                    $soldQuantity = 120;
+                @endphp
+
+                <div class="price-container">
+                    <span class="current-price">{{ number_format($currentPrice, 0, ',', '.') }}₫</span>
+                    <span class="original-price-strike">{{ number_format($originalPrice, 0, ',', '.') }}₫</span>
+                    <span class="discount-percentage">-15%</span>
+                </div>
+
+                <p class="sold-quantity">Đã bán: <span>{{ $soldQuantity }}</span></p>
+
                 <p class="product_page-intro-text">{{ $product->short_description }}</p>
 
                 <form action="{{ route('cart.add', ['product' => $product->id]) }}" method="POST" id="addToCartForm">
@@ -140,11 +205,9 @@
 </div>
 
 <script>
-    // Nhúng dữ liệu biến thể từ controller vào biến JavaScript
     const productVariants = @json($variants);
 
     document.addEventListener('DOMContentLoaded', function() {
-        // Lấy các element cần thiết
         const colorSelect = document.getElementById('color_id');
         const sizeSelect = document.getElementById('size_id');
         const stockInfo = document.getElementById('stock-info');
@@ -154,48 +217,41 @@
         const addToCartBtn = document.getElementById('add-to-cart-btn');
         const addToCartForm = document.getElementById('addToCartForm');
 
-        let currentStock = 0; // Biến lưu trữ số lượng tồn kho của biến thể đã chọn
+        let currentStock = 0;
 
-        // Hàm cập nhật trạng thái dựa trên lựa chọn màu sắc và kích thước
         function updateStockStatus() {
             const selectedColorId = colorSelect.value;
             const selectedSizeId = sizeSelect.value;
 
-            // Chỉ thực hiện khi cả màu và size đã được chọn
             if (selectedColorId && selectedSizeId) {
-                // Tìm biến thể phù hợp
                 const variant = productVariants.find(v => 
                     v.color_id == selectedColorId && v.size_id == selectedSizeId
                 );
 
                 if (variant) {
                     currentStock = variant.stock;
-                    quantityInput.max = currentStock; // Set max cho input
+                    quantityInput.max = currentStock;
 
                     if (currentStock > 0) {
                         stockInfo.textContent = `Số lượng còn: ${currentStock}`;
-                        stockInfo.style.color = '#1d3557'; // Màu xanh cho trạng thái còn hàng
-                        // Kích hoạt các nút
+                        stockInfo.style.color = '#1d3557';
                         addToCartBtn.disabled = false;
                         quantityInput.disabled = false;
                         minusBtn.disabled = false;
                         plusBtn.disabled = false;
                         
-                        // Đảm bảo giá trị hiện tại của input không vượt quá tồn kho
                         if (parseInt(quantityInput.value) > currentStock) {
                             quantityInput.value = currentStock;
                         }
                     } else {
                         stockInfo.textContent = 'Hết hàng';
-                        stockInfo.style.color = '#e63946'; // Màu đỏ cho trạng thái hết hàng
-                        // Vô hiệu hoá các nút
+                        stockInfo.style.color = '#e63946';
                         addToCartBtn.disabled = true;
                         quantityInput.disabled = true;
                         minusBtn.disabled = true;
                         plusBtn.disabled = true;
                     }
                 } else {
-                    // Trường hợp không tìm thấy biến thể (vd: tổ hợp màu/size không tồn tại)
                     stockInfo.textContent = 'Lựa chọn không có sẵn';
                     stockInfo.style.color = '#e63946';
                     currentStock = 0;
@@ -205,7 +261,6 @@
                     plusBtn.disabled = true;
                 }
             } else {
-                // Reset khi chưa chọn đủ
                 stockInfo.textContent = '';
                 currentStock = 0;
                 addToCartBtn.disabled = true;
@@ -215,11 +270,9 @@
             }
         }
 
-        // Lắng nghe sự kiện thay đổi trên cả hai dropdown
         colorSelect.addEventListener('change', updateStockStatus);
         sizeSelect.addEventListener('change', updateStockStatus);
 
-        // --- Cập nhật logic tăng/giảm số lượng để kiểm tra với tồn kho ---
         minusBtn.addEventListener('click', () => {
             let currentVal = parseInt(quantityInput.value);
             if (currentVal > 1) {
@@ -229,7 +282,6 @@
 
         plusBtn.addEventListener('click', () => {
             let currentVal = parseInt(quantityInput.value);
-            // Chỉ tăng nếu giá trị nhỏ hơn số lượng tồn kho
             if (currentVal < currentStock) {
                 quantityInput.value = currentVal + 1;
             } else {
@@ -243,22 +295,21 @@
                 quantityInput.value = 1;
             } else if (val > currentStock) {
                 alert('Số lượng vượt quá tồn kho!');
-                quantityInput.value = currentStock; // Tự động sửa về giá trị max
+                quantityInput.value = currentStock;
             }
         });
 
-        // --- Kiểm tra lần cuối trước khi submit form ---
         addToCartForm.addEventListener('submit', function(event) {
             const quantity = parseInt(quantityInput.value);
             if (quantity > currentStock) {
-                event.preventDefault(); // Ngăn chặn việc gửi form
+                event.preventDefault();
                 alert(`Xin lỗi, chúng tôi chỉ còn ${currentStock} sản phẩm. Vui lòng giảm số lượng.`);
             }
             if (currentStock <= 0) {
-                 event.preventDefault(); // Ngăn chặn việc gửi form
+                event.preventDefault();
                 alert('Sản phẩm này đã hết hàng, bạn không thể thêm vào giỏ.');
             }
-        });
+        }); 
     });
 </script>
 @endsection

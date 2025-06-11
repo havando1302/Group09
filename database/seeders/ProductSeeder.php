@@ -23,39 +23,25 @@ class ProductSeeder extends Seeder
 
         $productsData = [
             [
-                'name' => 'Áo Phông Cotton Cao Cấp',
-                'description' => 'Chất liệu cotton thoáng mát, thiết kế trẻ trung, phù hợp cho mọi hoạt động.',
+                'name' => 'Gấu Labubu',
+                'description' => 'Sản phẩm hot trend nhất năm 2025, được rất nhiều các bạn trẻ săn đón',
                 'price' => 280000,
                 'stock' => 75,
-                'image_url' => 'products/ao-phong-cotton.jpg',
+                'image_url' => 'products/product1.png',
             ],
             [
-                'name' => 'Quần Tây Công Sở Lịch Lãm',
-                'description' => 'Form dáng chuẩn, vải không nhăn, mang lại vẻ chuyên nghiệp và tự tin.',
-                'price' => 450000,
+                'name' => 'Gấu ôm ngủ đang yêu cho nữ',
+                'description' => 'Form dáng chuẩn, lông mềm, đẹp',
+                'price' => 150000,
                 'stock' => 40,
-                'image_url' => 'products/quan-tay-cong-so.jpg',
+                'image_url' => 'products/product2.png',
             ],
             [
-                'name' => 'Giày Thể Thao NIKE Air Max',
-                'description' => 'Công nghệ Air Max êm ái, thiết kế năng động, siêu nhẹ và bền bỉ.',
-                'price' => 1850000,
+                'name' => 'Gấu đáng yêu',
+                'description' => 'Sản phẩm đáng mua nhất trên thị trường',
+                'price' => 85000,
                 'stock' => 25,
-                'image_url' => 'products/giay-nike-air-max.jpg',
-            ],
-            [
-                'name' => 'Kính Mát Thời Trang Chống UV',
-                'description' => 'Bảo vệ mắt tối ưu khỏi tia UV, gọng kính chắc chắn, kiểu dáng hiện đại.',
-                'price' => 350000,
-                'stock' => 60,
-                'image_url' => 'products/kinh-mat-chong-uv.jpg',
-            ],
-            [
-                'name' => 'Đồng Hồ Thông Minh Z-Series',
-                'description' => 'Theo dõi sức khỏe, thông báo tiện lợi, pin trâu, chống nước.',
-                'price' => 1200000,
-                'stock' => 30,
-                'image_url' => null,
+                'image_url' => 'products/product3.png',
             ],
         ];
 

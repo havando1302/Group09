@@ -7,45 +7,45 @@ use App\Models\User;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+
 class AdminController extends Controller
 {
     public function dashboard(Request $request)
-{
-    $date = $request->input('date');
-    $queryDate = $date ? Carbon::parse($date) : Carbon::today();
+    {
+        $date = $request->input('date');
+        $queryDate = $date ? Carbon::parse($date) : Carbon::today();
 
-    // Tổng doanh thu trong ngày
-    $totalRevenue = Order::whereDate('created_at', $queryDate)->sum('total');
+        $totalRevenue = Order::whereDate('created_at', $queryDate)
+                              ->where('status', '!=', 'cancelled')
+                              ->sum('total');
 
-    // Tổng số đơn hàng trong ngày
-    $totalOrders = Order::whereDate('created_at', $queryDate)->count();
+        $totalOrders = Order::whereDate('created_at', $queryDate)
+                            ->where('status', '!=', 'cancelled')
+                            ->count();
 
-    // Khách hàng đã mua hàng (tính đến ngày đó)
-    $totalCustomers = User::whereHas('orders', function ($query) use ($queryDate) {
-        $query->whereDate('created_at', '<=', $queryDate);
-    })->count();
+        $totalCustomers = User::whereHas('orders', function ($query) use ($queryDate) {
+            $query->whereDate('created_at', '<=', $queryDate)
+                  ->where('status', '!=', 'cancelled');
+        })->count();
 
-    // Tổng số sản phẩm hiện có (tính đến ngày đó)
-    $totalProducts = Product::whereDate('created_at', '<=', $queryDate)->count();
+        $totalProducts = Product::whereDate('created_at', '<=', $queryDate)->count();
 
-    // Đơn hàng mới trong ngày
-    $newOrders = Order::whereDate('created_at', $queryDate)->count();
+        $newOrders = Order::whereDate('created_at', $queryDate)
+                          ->where('status', '!=', 'cancelled')
+                          ->count();
 
-    // Khách hàng mới trong ngày
-    $newCustomers = User::whereDate('created_at', $queryDate)->count();
+        $newCustomers = User::whereDate('created_at', $queryDate)->count();
 
-    // Sản phẩm mới trong ngày
-    $newProducts = Product::whereDate('created_at', $queryDate)->count();
+        $newProducts = Product::whereDate('created_at', $queryDate)->count();
 
-    return view('admin.dashboard', compact(
-        'totalRevenue',
-        'totalOrders',
-        'totalCustomers',
-        'totalProducts',
-        'newOrders',
-        'newCustomers',
-        'newProducts'
-    ));
-}
-
+        return view('admin.dashboard', compact(
+            'totalRevenue',
+            'totalOrders',
+            'totalCustomers',
+            'totalProducts',
+            'newOrders',
+            'newCustomers',
+            'newProducts'
+        ));
+    }
 }

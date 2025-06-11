@@ -21,7 +21,7 @@
                 <h2 class="text-xl font-semibold text-gray-800">Giỏ hàng của bạn đang trống</h2>
                 <p class="mt-2 text-gray-500">Hãy thêm sản phẩm vào giỏ hàng để bắt đầu mua sắm.</p>
                 <div class="mt-4">
-                    <a href="{{ route('products.index') }}" class="text-sm text-indigo-600 hover:text-indigo-500 font-medium">
+                    <a href="{{ route('products.index') }}" class="inline-block px-5 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition">
                         Tiếp tục mua sắm
                     </a>
                 </div>

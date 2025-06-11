@@ -23,22 +23,22 @@ class ProductCategorySeeder extends Seeder
         }
 
        
-        // $rootCategory = Category::where('slug', 'san-pham')->first();
-        // if ($rootCategory) {
-        //     if (!Category::where('slug', 'áo-phong')->exists()) {
-        //         Category::create([
-        //             'name' => 'Áo Phông',
-        //             'slug' => 'ao-phong',
-        //             'parent_id' => $rootCategory->id,
-        //         ]);
-        //     }
-        //     if (!Category::where('slug', 'quan-jean')->exists()) {
-        //         Category::create([
-        //             'name' => 'Quần Jean',
-        //             'slug' => 'quan-jean',
-        //             'parent_id' => $rootCategory->id,
-        //         ]);
-        //     }
-        // }
+         $rootCategory = Category::where('slug', 'san-pham')->first();
+         if ($rootCategory) {
+             if (!Category::where('slug', 'Gau-be')->exists()) {
+                Category::create([
+                    'name' => 'Gấu cho bé gái',
+                     'slug' => 'Gau-be',
+                     'parent_id' => $rootCategory->id,
+                 ]);
+            }
+             if (!Category::where('slug', 'Gau-nam')->exists()) {
+                 Category::create([
+                     'name' => 'Gấu cho bé nam',
+                     'slug' => 'Gau-nam',
+                    'parent_id' => $rootCategory->id,
+                 ]);
+           }
+         }
     }
 }

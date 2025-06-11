@@ -6,21 +6,19 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Cart;
 use App\Models\Product; 
+use App\Models\ProductVariant; // Đảm bảo dòng này đúng
 use Illuminate\Http\Request;
 use App\Notifications\OrderCancelled;
+use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
 {
     public function __construct()
     {
-        // Bỏ qua middleware admin cho 'checkout' và 'success'
-        $this->middleware('admin')->except(['checkout', 'success']);
+        $this->middleware('auth');
+        $this->middleware('admin')->except(['checkout', 'success', 'cancel']); 
     }
-    
 
-    /**
-     * Xử lý đặt hàng từ giỏ hàng
-     */
     public function checkout(Request $request)
     {
         if (!auth()->check()) {
@@ -46,7 +44,6 @@ class OrderController extends Controller
             return ($item->product->price ?? 0) * $item->quantity;
         });
 
-        // Tạo đơn hàng
         $order = Order::create([
             'user_id' => $user->id,
             'name' => $request->name,
@@ -56,11 +53,11 @@ class OrderController extends Controller
             'payment_method' => $request->payment_method,
             'total' => $total,
             'status' => 'pending',
+            'cancellation_reason' => null,
         ]);
 
-        // Tạo chi tiết đơn hàng và cập nhật tồn kho
         foreach ($cartItems as $item) {
-            if (!$item->product) continue; // Bỏ qua sản phẩm không tồn tại
+            if (!$item->product) continue;
 
             OrderItem::create([
                 'order_id' => $order->id,
@@ -71,50 +68,54 @@ class OrderController extends Controller
                 'color_id' => $item->color_id,
             ]);
             
-
-            // Giảm tồn kho sản phẩm
             $product = $item->product;
-            if ($product->stock >= $item->quantity) {
-                $product->stock -= $item->quantity;
-                $product->save();
+            if ($item->size_id && $item->color_id) {
+                $productVariant = ProductVariant::where('product_id', $item->product_id)
+                                    ->where('size_id', $item->size_id)
+                                    ->where('color_id', $item->color_id)
+                                    ->first();
+                if ($productVariant && $productVariant->stock >= $item->quantity) {
+                    $productVariant->stock -= $item->quantity;
+                    $productVariant->save();
+                } else {
+                    Log::warning("Not enough stock or variant not found for Product ID: {$item->product_id}, Size: {$item->size_id}, Color: {$item->color_id} during checkout.");
+                }
             } else {
-                // Có thể xử lý lỗi tồn kho không đủ ở đây nếu cần
+                if ($product->stock >= $item->quantity) {
+                    $product->stock -= $item->quantity;
+                    $product->save();
+                } else {
+                    Log::warning("Not enough stock for Product ID: {$item->product_id} during checkout.");
+                }
             }
         }
 
-        // Xóa giỏ hàng
         Cart::where('user_id', $user->id)->delete();
 
         return redirect()->route('checkout.success')->with('message', 'Đặt hàng thành công!');
     }
+
     public function success()
-{
-    return view('checkout.success');
-}
+    {
+        return view('checkout.success');
+    }
 
-
-    /**
-     * Danh sách đơn hàng (admin)
-     */
     public function index()
-{
-    $orders = Order::with(['user', 'items.size', 'items.color', 'items.product'])->latest()->get();
-    return view('admin.orders.index', compact('orders'));
-}
+    {
+        // Đã sửa đổi truy vấn để loại trừ các đơn hàng có trạng thái 'cancelled'
+        $orders = Order::with(['user', 'items.size', 'items.color', 'items.product'])
+                        ->where('status', '!=', 'cancelled') // Thêm điều kiện này
+                        ->latest()
+                        ->get();
+        return view('admin.orders.index', compact('orders'));
+    }
 
-
-    /**
-     * Trang chỉnh sửa đơn hàng (admin)
-     */
     public function edit($id)
     {
         $order = Order::with(['user', 'items.product'])->findOrFail($id);
         return view('admin.orders.edit', compact('order'));
     }
 
-    /**
-     * Cập nhật đơn hàng (admin)
-     */
     public function update(Request $request, Order $order)
     {
         $validated = $request->validate([
@@ -125,28 +126,86 @@ class OrderController extends Controller
             'note' => 'nullable|string',
             'total' => 'required|numeric|min:0',
             'status' => 'required|in:pending,processing,shipped,completed,cancelled',
+            'cancellation_reason' => 'nullable|string|max:1000', 
         ]);
 
         $oldStatus = $order->status;
 
         $order->update($validated);
 
-        // Nếu trạng thái chuyển sang cancelled, hoàn trả tồn kho
         if ($order->status === 'cancelled' && $oldStatus !== 'cancelled') {
             foreach ($order->items as $item) {
                 $product = $item->product;
                 if ($product) {
-                    $product->stock += $item->quantity;
-                    $product->save();
+                    if ($item->size_id && $item->color_id) {
+                        $productVariant = ProductVariant::where('product_id', $item->product_id)
+                                            ->where('size_id', $item->size_id)
+                                            ->where('color_id', $item->color_id)
+                                            ->first();
+                        if ($productVariant) {
+                            $productVariant->stock += $item->quantity;
+                            $productVariant->save();
+                        }
+                    } else {
+                        $product->stock += $item->quantity;
+                        $product->save();
+                    }
                 }
             }
         }
 
-        // Gửi thông báo nếu trạng thái thay đổi
         if ($order->status !== $oldStatus && $order->user) {
+            $order->user->notify(new OrderCancelled($order)); 
+        }
+
+        return redirect()->route('admin.orders.index')->with('success', 'Đơn hàng đã được cập tạo.');
+    }
+
+    public function cancel(Request $request, Order $order)
+    {
+        if ($order->user_id !== auth()->id()) {
+            return redirect()->back()->with('error', 'Bạn không có quyền hủy đơn hàng này.');
+        }
+
+        if ($order->status !== 'pending') {
+            return redirect()->back()->with('error', 'Đơn hàng không thể hủy vì trạng thái hiện tại là: ' . $order->status);
+        }
+
+        $cancellationReason = $request->input('cancellation_reason', 'Không có lý do cụ thể.'); 
+
+        foreach ($order->items as $item) {
+            $product = $item->product; 
+            
+            if ($product) {
+                if ($item->size_id && $item->color_id) {
+                    $productVariant = ProductVariant::where('product_id', $item->product_id)
+                                        ->where('size_id', $item->size_id)
+                                        ->where('color_id', $item->color_id)
+                                        ->first();
+                    if ($productVariant) {
+                        $productVariant->stock += $item->quantity;
+                        $productVariant->save();
+                    } else {
+                        Log::warning("Variant not found for OrderItem ID: {$item->id} (Product ID: {$item->product_id}, Color ID: {$item->color_id}, Size ID: {$item->size_id}). Stock not returned for this item.");
+                    }
+                } else {
+                    $product->stock += $item->quantity;
+                    $product->save();
+                }
+            } else {
+                Log::warning("Product not found for OrderItem ID: {$item->id}. Stock could not be returned.");
+            }
+        }
+
+        $order->update([
+            'status' => 'cancelled',
+            'cancellation_reason' => $cancellationReason, 
+        ]);
+        
+        if ($order->user) {
             $order->user->notify(new OrderCancelled($order));
         }
 
-        return redirect()->route('admin.orders.index')->with('success', 'Đơn hàng đã được cập nhật.');
+        return redirect()->back()->with('success', 'Đơn hàng đã được hủy thành công.');
     }
 }
