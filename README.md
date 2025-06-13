@@ -31,9 +31,9 @@ Với mục tiêu giúp việc kinh doanh gấu bông trở nên hiện đại, 
 ## Ghi chú
   Dự án có thể mở rộng với tính năng thanh toán online, tích điểm cho khách hàng, hoặc chatbot tư vấn sản phẩm.
 ## UML & lưu đồ dự án
-- lưu đồ giỏ hàng & thanh toán
-![z6690930366255_c301dd2bfd56f00487f65ff91d983219](https://github.com/user-attachments/assets/b1fa4125-e771-42e0-9360-f5db3f83da05)
+
 - lưu đồ quản trị viên(admin) 
 ![z6690991897745_3890bec6ec4416941441c60ae693a6b1](https://github.com/user-attachments/assets/83c91ebe-a079-44ca-827a-6710426c6c76)
-
+- lưu đồ giỏ hàng & thanh toán
+![z6690930366255_c301dd2bfd56f00487f65ff91d983219](https://github.com/user-attachments/assets/b1fa4125-e771-42e0-9360-f5db3f83da05)
 
