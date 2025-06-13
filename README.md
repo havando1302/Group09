@@ -13,9 +13,7 @@ Với mục tiêu giúp việc kinh doanh gấu bông trở nên hiện đại, 
 
 ## Công nghệ dự kiến sử dụng:
 - CSDL: MySql
-- Languages: JavaScipt, SCSS
-18.3% 
-CSS,Less, Blade, PHP, JavaScript,HTML
+- Languages: JavaScipt, SCSS, CSS,Less, Blade, PHP, JavaScript,HTML
   Chức năng chính
 ## Chức Năng chính
 - Xem danh sách các sản phẩm gấu bông
