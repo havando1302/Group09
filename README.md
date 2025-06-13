@@ -12,8 +12,10 @@ Trong thời đại công nghệ số hiện nay, việc mua sắm trực tuyế
 Với mục tiêu giúp việc kinh doanh gấu bông trở nên hiện đại, chuyên nghiệp và dễ tiếp cận hơn, nhóm chúng tôi xây dựng một hệ thống phần mềm bán gấu bông trực tuyến. Hệ thống này cho phép người dùng dễ dàng truy cập website, xem thông tin sản phẩm, chọn lựa mẫu gấu bông yêu thích, đặt hàng và thanh toán nhanh chóng. Bên cạnh đó, người quản trị có thể theo dõi đơn hàng, thêm mới sản phẩm, quản lý số lượng hàng tồn và tương tác với khách hàng một cách hiệu quả.
 
 ## Công nghệ dự kiến sử dụng:
-- CSDL: MongoDB/MySql
-- Languages: JavaScipt, Python
+- CSDL: MySql
+- Languages: JavaScipt, SCSS
+18.3% 
+CSS,Less, Blade, PHP, JavaScript,HTML
   Chức năng chính
 ## Chức Năng chính
 - Xem danh sách các sản phẩm gấu bông
