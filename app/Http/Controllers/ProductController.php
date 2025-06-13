@@ -49,44 +49,34 @@ class ProductController extends Controller
          */
         public function show($id)
         {
-            // 1. Tải sản phẩm cùng với các quan hệ cần thiết một cách hiệu quả (Eager Loading)
-            // Lấy tất cả các biến thể (variants) và từ đó lấy thông tin màu (color) và kích thước (size)
-            // findOrFail sẽ tự động trả về lỗi 404 nếu không tìm thấy sản phẩm.
+           
             $product = Product::with('variants.color', 'variants.size')->findOrFail($id);
     
-            // 2. Trích xuất danh sách các màu sắc duy nhất từ các biến thể của sản phẩm
-            // - `map()` lặp qua mỗi biến thể để lấy đối tượng 'color'.
-            // - `filter()` loại bỏ các kết quả null (nếu có biến thể không có màu).
-            // - `unique('id')` đảm bảo mỗi màu chỉ xuất hiện một lần.
-            // - `values()` reset lại key của collection để bắt đầu từ 0.
             $colors = $product->variants
                 ->map(fn($variant) => $variant->color)
                 ->filter()
                 ->unique('id')
                 ->values();
     
-            // 3. Tương tự, trích xuất danh sách các kích thước duy nhất
+           
             $sizes = $product->variants
                 ->map(fn($variant) => $variant->size)
                 ->filter()
                 ->unique('id')
                 ->values();
     
-            // 4. Lấy toàn bộ collection các biến thể để truyền sang view.
-            // Cấu trúc này (`[{color_id, size_id, stock}, ...]`) rất linh hoạt cho JavaScript
-            // và dễ dàng mở rộng trong tương lai (ví dụ: thêm giá riêng cho từng biến thể).
             $variants = $product->variants;
             
-            // 5. Kiểm tra quyền của người dùng để quyết định hiển thị view nào
+           
             $user = Auth::user();
             $viewName = ($user && $user->role === 'admin') ? 'admin.products.show' : 'products.show';
     
-            // 6. Trả về view cùng với các dữ liệu cần thiết
-            // Sử dụng `compact` để truyền biến một cách gọn gàng.
+         
+            
             return view($viewName, compact('product', 'colors', 'sizes', 'variants'));
         }
     
-        // Các phương thức khác của controller...
+
 
     
     

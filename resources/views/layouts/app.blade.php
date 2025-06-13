@@ -102,11 +102,11 @@
 </head>
 
 <body class="font-sans antialiased">
-  <div class="page-wrapper min-h-screen bg-gray-100">
 
     @include('layouts.navigation')
 
-    <main>
+    <main class="grid main-content">
+
       @yield('content')
     </main>
 
@@ -166,6 +166,6 @@
       </div>
     </footer>
 
-  </div>
+  
 </body>
 </html>
