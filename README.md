@@ -27,8 +27,15 @@ Với mục tiêu giúp việc kinh doanh gấu bông trở nên hiện đại, 
 - Tuần 3–4: Thiết kế sơ bộ (Use case, ERD, giao diện mẫu)
 - Tuần 5–7: Phát triển backend và frontend
 - Tuần 8: Kiểm thử và hoàn thiện tài liệu báo cáo
-## Ghi chú
-  Dự án có thể mở rộng với tính năng thanh toán online, tích điểm cho khách hàng, hoặc chatbot tư vấn sản phẩm.
+## Hướng phát triển
+- Nhằm hoàn thiện và nâng cấp hệ thống trong tương lai, nhóm đề xuất một số hướng phát triển như sau:
+Hoàn thiện tính năng và giao diện người dùng để phù hợp hơn với quy trình nghiệp vụ thực tế và thói quen mua sắm của người dùng hiện đại.
+Tích hợp thanh toán trực tuyến: Áp dụng các phương thức thanh toán như ví điện tử (Momo, ZaloPay), thanh toán qua mã QR hoặc cổng VNPAY để nâng cao tính tiện lợi và chuyên nghiệp.
+Cải thiện hệ thống quản trị và báo cáo: Bổ sung chức năng thống kê doanh thu, phân tích hành vi khách hàng, báo cáo bán hàng theo thời gian, sản phẩm hoặc khu vực.
+Tự động hóa giao tiếp với khách hàng: Phát triển thêm tính năng gửi email/SMS tự động khi đơn hàng được xác nhận, vận chuyển hoặc có chương trình khuyến mãi.
+Xây dựng hệ thống gợi ý sản phẩm: Dựa trên lịch sử mua hàng hoặc sản phẩm tương tự để cá nhân hóa trải nghiệm người dùng.
+Nâng cấp chatbot hỗ trợ: Tích hợp để chatbot có khả năng hiểu ngữ cảnh và trả lời linh hoạt hơn.
+
 ## UML & lưu đồ dự án
 - Biểu đồ Use Case tổng quan.
 ![image](https://github.com/user-attachments/assets/9af4cb93-043f-4500-854d-0cb053224be3)
