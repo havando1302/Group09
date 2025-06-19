@@ -208,7 +208,7 @@
 <header class="header">
     <div class="header_intro">
         <ul class="header_intro-list">
-            <li class="header_intro-item" style="font-weight: bold;">Mặc đẹp – Sống chất – Dẫn đầu xu hướng</li>
+            <li class="header_intro-item" style="font-weight: bold;">Gấu xinh – Quà ý nghĩa – Gửi trọn yêu thương</li>
         </ul>
         <ul class="header_intro-list">
         <li class="header_intro-item" style="font-weight: bold;">
