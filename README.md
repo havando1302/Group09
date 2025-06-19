@@ -63,7 +63,8 @@ Với mục tiêu giúp việc kinh doanh gấu bông trở nên hiện đại, 
 
 ## Slide & Báo Cáo
 
-[NHÓM-09-KTPM (2).pptx](https://github.com/user-attachments/files/20824457/NHOM-09-KTPM.2.pptx)
+[NHÓM-09-KTPM.pptx](https://github.com/user-attachments/files/20824481/NHOM-09-KTPM.pptx)
+
 
 
 
