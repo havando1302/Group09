@@ -48,6 +48,12 @@ Với mục tiêu giúp việc kinh doanh gấu bông trở nên hiện đại, 
 - Chức năng yêu cầu đặt hàng
 ![image](https://github.com/user-attachments/assets/4c3c666a-16ae-45c8-9475-48a361ae68fb)
 
+- Chức năng xem thông tin sẩn phẩm
+![image](https://github.com/user-attachments/assets/305f9bdc-1a66-497e-af80-dc3e0402dbe6)
+
+
+
+
 
 
 
