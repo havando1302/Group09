@@ -34,6 +34,8 @@ Với mục tiêu giúp việc kinh doanh gấu bông trở nên hiện đại, 
   
 ![z6690930366255_c301dd2bfd56f00487f65ff91d983219](https://github.com/user-attachments/assets/b1fa4125-e771-42e0-9360-f5db3f83da05)
 - lưu đồ quản trị viên(admin)
+- ![image](https://github.com/user-attachments/assets/9af4cb93-043f-4500-854d-0cb053224be3)
+
 
 ![z6690991897745_3890bec6ec4416941441c60ae693a6b1](https://github.com/user-attachments/assets/83c91ebe-a079-44ca-827a-6710426c6c76)
 
