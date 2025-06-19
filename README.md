@@ -74,5 +74,13 @@ Với mục tiêu giúp việc kinh doanh gấu bông trở nên hiện đại, 
 
 
 
+## Cách Cài Đặt
+ 1. Clone repository từ GitHub:
+
+
+
+
+
+
 
 
