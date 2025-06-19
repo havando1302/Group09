@@ -3,66 +3,226 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Teddy Paradise</title>
-
-    <!-- Font Awesome -->
+    <title>DOHAFASHION</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Roboto', sans-serif; }
-        .header { background-color: white; border-bottom: 1px solid #ccc; }
-        .header_intro { display: flex; justify-content: space-between; padding: 5px 40px; background-color: #f7f7f7; font-size: 14px; color: #333; }
-        .header_intro-list { display: flex; list-style: none; }
-        .header_intro-item { margin-right: 20px; position: relative; }
-        .header_intro-icon { margin-right: 5px; color: #333; }
-        .tooltip .subintro { display: none; position: absolute; background: #333; color: #fff; padding: 3px 8px; border-radius: 4px; top: 25px; left: 0; font-size: 12px; white-space: nowrap; }
-        .tooltip:hover .subintro { display: block; }
-        .header_navbar { display: flex; align-items: center; justify-content: space-between; padding: 15px 40px; background-color: white; position: relative; }
-        .header_navbar-logo img { height: 60px; }
-        .header_navbar-list { display: flex; list-style: none; gap: 50px; }
-        .header_navbar-item { margin: 0 15px; font-weight: 500; position: relative; }
-        .header_navbar-item a { text-decoration: none; color: #333; transition: color 0.2s; display: inline-flex; align-items: center; gap: 6px; }
-        .header_navbar-item a:hover { color: #ff5e57; }
-        .header_navbar-btn { display: flex; align-items: center; }
-        .header_navbar-btn-item { margin-left: 15px; position: relative; cursor: pointer; }
-        .separator { width: 1px; height: 20px; background-color: #ccc; margin: 0 8px; }
-        .header_navbar-search { position: absolute; top: 100%; right: 0; background: white; padding: 8px; border: 1px solid #ccc; border-radius: 6px; display: none; z-index: 999; }
-        .header_navbar-search input { width: 180px; padding: 6px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px; }
-        .header_navbar-btn-item i { font-size: 18px; color: #333; }
-        .notification-icon { position: relative; }
-        .notification-count { position: absolute; top: -6px; right: -6px; background-color: red; color: white; font-size: 11px; font-weight: bold; padding: 2px 6px; border-radius: 50%; line-height: 1; }
-        .header_navbar-submenu { display: none; position: absolute; top: 100%; left: 0; background: white; border: 1px solid #ddd; border-radius: 6px; list-style: none; padding: 10px 0; min-width: 180px; z-index: 1000; box-shadow: 0 2px 8px rgb(0 0 0 / 0.1); }
-        .header_navbar-submenu li { padding: 8px 20px; }
-        .header_navbar-submenu li a { color: #333; font-weight: 400; }
-        .header_navbar-submenu li a:hover { color: #ff5e57; }
-        .dropdown-icon { font-weight: bold; cursor: pointer; user-select: none; font-size: 16px; line-height: 1; }
-        /* Thêm cursor pointer cho nút menu con */
-        .header_navbar-dropdown > a {
-            cursor: pointer;
-        }
-    </style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .header {
+        background-color: white;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .header_intro {
+        display: flex;
+        justify-content: space-between;
+        padding: 5px 40px;
+        background-color:  #e2a57c;
+        font-size: 14px;
+        color: #333;
+    }
+
+    .header_intro-list {
+        display: flex;
+        list-style: none;
+    }
+
+    .header_intro-item {
+        margin-right: 20px;
+        position: relative;
+    }
+
+    .header_intro-icon {
+        margin-right: 5px;
+        color: #333;
+    }
+
+    .tooltip .subintro {
+        display: none;
+        position: absolute;
+        background: #333;
+        color: #fff;
+        padding: 3px 8px;
+        border-radius: 4px;
+        top: 25px;
+        left: 0;
+        font-size: 12px;
+        white-space: nowrap;
+    }
+
+    .tooltip:hover .subintro {
+        display: block;
+    }
+
+    .header_navbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px 40px;
+        background-color: white;
+        position: relative;
+    }
+
+    .header_navbar-logo img {
+        height: 100px;
+        width: auto;
+        
+    }
+
+    .header_navbar-list {
+        display: flex;
+        list-style: none;
+        gap: 50px;
+    }
+
+    .header_navbar-item {
+        margin: 0 15px;
+        font-weight: 500;
+        position: relative;
+    }
+
+    .header_navbar-item a {
+        text-decoration: none;
+        color: #333;
+        transition: color 0.2s;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .header_navbar-item a:hover {
+        color: #ff5e57;
+    }
+
+    .header_navbar-btn {
+        display: flex;
+        align-items: center;
+    }
+
+    .header_navbar-btn-item {
+        margin-left: 15px;
+        position: relative;
+        cursor: pointer;
+    }
+
+    .separator {
+        width: 1px;
+        height: 20px;
+        background-color: #ccc;
+        margin: 0 8px;
+    }
+
+    .header_navbar-search {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background: white;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        display: none;
+        z-index: 999;
+    }
+
+    .header_navbar-search input {
+        width: 180px;
+        padding: 6px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .header_navbar-btn-item i {
+        font-size: 18px;
+        color: #333;
+    }
+
+    .notification-icon {
+        position: relative;
+    }
+
+    .notification-count {
+        position: absolute;
+        top: -6px;
+        right: -6px;
+        background-color: red;
+        color: white;
+        font-size: 11px;
+        font-weight: bold;
+        padding: 2px 6px;
+        border-radius: 50%;
+        line-height: 1;
+    }
+
+    .header_navbar-submenu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        list-style: none;
+        padding: 10px 0;
+        min-width: 180px;
+        z-index: 1000;
+        box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+    }
+
+    .header_navbar-submenu li {
+        padding: 8px 20px;
+    }
+
+    .header_navbar-submenu li a {
+        color: #333;
+        font-weight: 400;
+    }
+
+    .header_navbar-submenu li a:hover {
+        color: #ff5e57;
+    }
+
+    .dropdown-icon {
+        font-weight: bold;
+        cursor: pointer;
+        user-select: none;
+        font-size: 16px;
+        line-height: 1;
+    }
+
+    .header_navbar-dropdown > a {
+        cursor: pointer;
+    }
+</style>
+
 </head>
 <body>
 <header class="header">
     <div class="header_intro">
         <ul class="header_intro-list">
-            <li class="header_intro-item" style="font-weight: bold;">Sáng tạo không giới hạn</li>
+            <li class="header_intro-item" style="font-weight: bold;">Mặc đẹp – Sống chất – Dẫn đầu xu hướng</li>
         </ul>
         <ul class="header_intro-list">
-            <li class="header_intro-item tooltip">
+        <li class="header_intro-item" style="font-weight: bold;">
                 <i class="header_intro-icon fa-regular fa-clock"></i> 08:00 - 17:00
-                <div class="subintro">Giờ làm việc</div>
             </li>
-            <li class="header_intro-item tooltip">
-                <i class="header_intro-icon fa-solid fa-phone"></i> +84 904091648
-                <div class="subintro">SĐT liên hệ</div>
+            <li class="header_intro-item" style="font-weight: bold;">
+                <i class="header_intro-icon fa-solid fa-phone"></i> +84 337950933
             </li>
         </ul>
     </div>
 
     <nav class="header_navbar">
         <a href="/" class="header_navbar-logo">
-            <img src="{{ asset('storage/products/Gemini_Generated_Image_krh9ixkrh9ixkrh9.jpg') }}">
+           <img src="{{ asset('assets/img/LoGo1.png') }}">
         </a>
 
         <ul class="header_navbar-list">
@@ -107,7 +267,7 @@
 
             <li class="header_navbar-item"><a href="{{ url('/introduce') }}">Giới thiệu</a></li>
 
-            {{-- Sửa phần Liên hệ để phân biệt admin và user --}}
+            
             @auth
                 @if(auth()->user()->is_admin)
                 <li class="header_navbar-item"><a href="{{ route('admin.contacts.index') }}">Liên hệ</a></li>

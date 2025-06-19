@@ -1,11 +1,42 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
-    <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-6">🛒 Tydy xin chào quý khách!</h2>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Baloo+2&display=swap');
+  .btn-add-to-cart, .btn-login {
+    font-weight: 600;
+    text-align: center;
+    display: block;
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    text-decoration: none;
+    margin-top: 0.5rem;
+  }
+
+  .btn-add-to-cart {
+    background: linear-gradient(to right, #60a5fa, #3b82f6);
+    color: white;
+  }
+
+  .btn-add-to-cart:hover {
+    background: linear-gradient(to right, #3b82f6, #2563eb);
+  }
+  .page-title {
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+    color: #4f46e5;
+    margin-top: 30px;
+  }
+
+  </style>
+  <div class="w-full max-w-screen-xl mx-auto p-4 sm:p-6 lg:p-8" style="margin-bottom: 50px;">
+    <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-6">🛒 Teddy Paradise xin chào quý khách!</h2>
 
     <!-- Tabs -->
-    <div class="flex border-b border-gray-200 mb-6">
+    <div class="flex border-b border-gray-200 mb-6 ">
         <button id="tab-cart-btn" class="py-2 px-4 text-blue-600 border-b-2 border-blue-600 font-semibold focus:outline-none">
             Giỏ hàng của bạn
         </button>
@@ -45,15 +76,20 @@
                             @foreach($cartItems as $item)
                                 <tr>
                                     <td class="px-6 py-4">
-                                        <div class="flex items-center">
-                                            <img src="{{ $item->product && $item->product->image_url ? asset('storage/' . $item->product->image_url) : asset('images/default-product.png') }}"
-                                                 alt="{{ $item->product->name ?? 'Hình ảnh sản phẩm' }}"
-                                                 onerror="this.onerror=null; this.src='{{ asset('images/default-product.png') }}';"
-                                                 class="w-16 h-16 object-cover rounded border border-gray-200">
-                                            <div class="ml-4 text-sm font-medium text-gray-900">
-                                                {{ $item->product->name ?? 'Sản phẩm không có tên' }}
-                                            </div>
-                                        </div>
+                                    <div class="flex items-center">
+                                      <img
+                                          src="{{ Str::startsWith($item->product->image_url ?? '', 'assets/') 
+                                         ? asset($item->product->image_url) 
+                                         : asset('storage/' . ($item->product->image_url ?? '')) }}"
+                                              alt="{{ $item->product->name ?? 'Hình ảnh sản phẩm' }}"
+                                            class="w-16 h-16 object-cover rounded border border-gray-200"
+                                         >
+
+                                       <div class="ml-4 text-sm font-medium text-gray-900">
+                                            {{ $item->product->name ?? 'Sản phẩm không có tên' }}
+                                         </div>
+                            </div>
+
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-700">
                                         {{ number_format($item->product->price ?? 0) }} VNĐ
@@ -104,8 +140,83 @@
                 </div>
             </div>
         @endif
-    </div>
+        @php
+        use Illuminate\Support\Str;
+        $defaultImageUrl = asset('assets/img/default.jpg');
+    @endphp
 
+    <h2 class="page-title mt-10 mb-4 text-xl font-bold text-gray-800">🔥 SẢN PHẨM NỔI BẬT</h2>
+
+    <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-product">
+            @foreach($popularProducts->chunk(3) as $chunkIndex => $chunk)
+                <div class="carousel-item @if($chunkIndex === 0) active @endif">
+                    <div class="d-flex justify-content-center gap-4 px-4">
+                        @foreach($chunk as $product)
+                            @php
+                                $imageUrl = $product->image_url;
+                                $imagePath = Str::startsWith($imageUrl, 'assets/') 
+                                              ? asset($imageUrl) 
+                                              : asset('storage/' . $imageUrl);
+                                $totalStock = $product->variants->sum('stock');
+                            @endphp
+
+                            <div class="product-card" style="width: 300px;">
+                                <a href="{{ route('products.show', $product->id) }}">
+                                    <div class="product-image-container">
+                                        <img src="{{ $imagePath }}"
+                                             alt="{{ $product->name }}"
+                                             onerror="this.onerror=null; this.src='{{ $defaultImageUrl }}';">
+                                    </div>
+                                    <h3 class="text-lg font-semibold text-gray-800 mt-2">{{ $product->name }}</h3>
+                                </a>
+                                <p class="text-gray-600">{{ number_format($product->price) }} VNĐ</p>
+                                <p class="text-sm text-gray-500">Còn {{ $totalStock }} sản phẩm</p>
+
+                                @if($product->variants->count())
+                                    <div class="mt-2">
+                                        <p class="text-sm font-medium text-gray-700">Màu sắc:</p>
+                                        <div class="flex flex-wrap">
+                                            @foreach($product->variants->pluck('color_name')->unique() as $color)
+                                                <span class="variant-label">{{ $color }}</span>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                    <div class="mt-2">
+                                        <p class="text-sm font-medium text-gray-700">Kích cỡ:</p>
+                                        <div class="flex flex-wrap">
+                                            @foreach($product->variants->pluck('size_name')->unique() as $size)
+                                                <span class="variant-label size">{{ $size }}</span>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                @endif
+
+                                <div class="mt-4">
+                                    @auth
+                                        <a href="{{ route('products.show', $product->id) }}" class="btn-add-to-cart">Thêm vào giỏ hàng</a>
+                                    @else
+                                        <a href="{{ route('login') }}" class="btn-login">Đăng nhập để mua hàng</a>
+                                    @endauth
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon bg-dark rounded-circle p-2" aria-hidden="true"></span>
+            <span class="visually-hidden">Trước</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon bg-dark rounded-circle p-2" aria-hidden="true"></span>
+            <span class="visually-hidden">Tiếp</span>
+        </button>
+    </div>
+</div>
+                                            
     <!-- Tab Orders -->
     <div id="tab-orders" class="hidden">
         <h3 class="text-2xl font-bold text-gray-800 mb-4">📦 Đơn hàng của bạn</h3>

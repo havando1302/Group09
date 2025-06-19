@@ -99,10 +99,13 @@
 <div class="grid">
     <div class="product_page">
 
-        <div class="product_page-introduce">
-            <div class="product_page-intro-item">
-                <img src="{{ asset('storage/' . $product->image_url) }}" alt="{{ $product->name }}" class="product_page-intro-img">
-            </div>
+    <div class="product_page-intro-item">
+    <img 
+        src="{{ Str::startsWith($product->image_url, 'assets/') ? asset($product->image_url) : asset('storage/' . $product->image_url) }}" 
+        alt="{{ $product->name }}" 
+        class="product_page-intro-img">
+</div>
+
 
             <div class="product_page-intro-item" style="flex: 1;">
                 <div class="product_page-intro-subtitle">

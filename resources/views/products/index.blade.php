@@ -1,6 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
+@php
+    use Illuminate\Support\Str;
+
+    // Đường dẫn ảnh mặc định nếu ảnh lỗi
+    $defaultImageUrl = asset('assets/img/default.jpg');
+@endphp
+
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Baloo+2&display=swap');
 
@@ -101,40 +108,40 @@
 </style>
 
 <div class="container mx-auto p-6">
-    <h1 class="page-title text-3xl font-baloo mb-6 text-center text-gray-800">THIÊN ĐƯỜNG CỦA NHỮNG CHÚ GẤU</h1>
+    <h1 class="page-title text-3xl font-baloo mb-6 text-center text-gray-800">Ôm mềm – Yêu thương – Đậm dấu ấn riêng</h1>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
         @forelse($products as $product)
-            <div class="product-card">
-                @php
-                    $defaultImageUrl = asset('images/default-product.png');
-                @endphp
+            @php
+                $imageUrl = $product->image_url;
 
+                // Nếu ảnh bắt đầu bằng 'assets/', dùng trực tiếp
+                if (Str::startsWith($imageUrl, 'assets/')) {
+                    $imagePath = asset($imageUrl);
+                } else {
+                    $imagePath = asset('storage/' . $imageUrl);
+                }
+
+                $totalStock = $product->variants->sum('stock');
+            @endphp
+
+            <div class="product-card">
                 <a href="{{ route('products.show', $product->id) }}" class="block hover:underline">
                     <div class="product-image-container">
-                        @if(!empty($product->image_url) && Storage::disk('public')->exists($product->image_url))
-                            <img src="{{ asset('storage/' . $product->image_url) }}" alt="{{ $product->name }}"
-                                 onerror="this.onerror=null; this.src='{{ $defaultImageUrl }}';">
-                        @else
-                            <img src="{{ $defaultImageUrl }}" alt="{{ $product->name }}">
-                        @endif
+                        <img src="{{ $imagePath }}" alt="{{ $product->name }}"
+                             onerror="this.onerror=null; this.src='{{ $defaultImageUrl }}';">
                     </div>
 
                     <h3 class="text-lg font-semibold text-gray-800">{{ $product->name }}</h3>
                 </a>
 
                 <p class="text-gray-600">{{ number_format($product->price) }} VNĐ</p>
-                @php
-                  $totalStock = $product->variants->sum('stock');
-                    @endphp
-                    <p class="text-sm text-gray-500">Còn {{ $totalStock }} sản phẩm</p>
-
+                <p class="text-sm text-gray-500">Còn {{ $totalStock }} sản phẩm</p>
 
                 @if($product->variants->count())
                     <div class="mt-2">
                         <p class="text-sm font-medium text-gray-700">Màu sắc:</p>
                         <div class="flex flex-wrap">
-                            {{-- Lấy danh sách color_name duy nhất --}}
                             @foreach($product->variants->pluck('color_name')->unique() as $color)
                                 <span class="variant-label">{{ $color }}</span>
                             @endforeach
@@ -144,7 +151,6 @@
                     <div class="mt-2">
                         <p class="text-sm font-medium text-gray-700">Kích cỡ:</p>
                         <div class="flex flex-wrap">
-                            {{-- Lấy danh sách size_name duy nhất --}}
                             @foreach($product->variants->pluck('size_name')->unique() as $size)
                                 <span class="variant-label size">{{ $size }}</span>
                             @endforeach
@@ -153,16 +159,15 @@
                 @endif
 
                 <div class="mt-4">
-                @auth
-    <a href="{{ route('products.show', $product->id) }}" class="btn-add-to-cart text-center block mt-2">
-        Thêm vào giỏ hàng
-    </a>
-@else
-    <a href="{{ route('login') }}" class="btn-login mt-2">
-        Đăng nhập để mua hàng
-    </a>
-@endauth
-
+                    @auth
+                        <a href="{{ route('products.show', $product->id) }}" class="btn-add-to-cart text-center block mt-2">
+                            Thêm vào giỏ hàng
+                        </a>
+                    @else
+                        <a href="{{ route('login') }}" class="btn-login mt-2">
+                            Đăng nhập để mua hàng
+                        </a>
+                    @endauth
                 </div>
             </div>
         @empty

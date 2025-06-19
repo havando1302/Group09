@@ -12,6 +12,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet" />
+  <!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
 
   <!-- Scripts -->
   @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -65,16 +68,22 @@
       margin-bottom: 15px;
     }
 
+    .footer_info-logo2 {
+      max-width: 50px;
+      margin-bottom: 10px;
+    }
     .footer_info-heading {
       font-weight: 700;
       margin-bottom: 10px;
     }
 
     .footer_info-line {
-      width: 40px;
-      height: 2px;
+      width: 20px;
+      height: 1px;
       background-color: #fff;
+      margin-top: 5px;
       margin-bottom: 10px;
+      display: flex;
     }
 
     .footer_info-text {
@@ -86,19 +95,16 @@
       color: #fff;
       text-decoration: none;
     }
+    .footer_payment-app
+    {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+    }
   </style>
 
-  <script type="text/javascript">
-    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
-    (function () {
-      var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
-      s1.async = true;
-      s1.src = 'https://embed.tawk.to/68406f2a90125c190bccd498/1istr4g4p';
-      s1.charset = 'UTF-8';
-      s1.setAttribute('crossorigin', '*');
-      s0.parentNode.insertBefore(s1, s0);
-    })();
-  </script>
 </head>
 
 <body class="font-sans antialiased">
@@ -115,7 +121,7 @@
       <div class="grid max-w-7xl mx-auto px-5">
         <div class="footer_info flex flex-wrap justify-between gap-8">
           <div class="footer_info-content">
-            <img src="{{ asset('storage/products/Gemini_Generated_Image_krh9ixkrh9ixkrh9-fotor-20241009183056-removebg-preview.png') }}"
+             <img src="{{ asset('assets/img/LoGo1.png') }}"
               alt="Logo" class="footer_info-logo">
           </div>
 
@@ -123,8 +129,8 @@
             <h4 class="footer_info-heading">THÔNG TIN LIÊN HỆ</h4>
             <div class="footer_info-line"></div>
             <p class="footer_info-text">Số hotline được trực trong khung giờ từ 9h-17h mỗi T2 – T7 hàng tuần</p>
-            <p class="footer_info-text">Đường dây nóng: +84 904 091 648</p>
-            <p class="footer_info-text">P. Nguyễn Trác, Yên Nghĩa, Hà Đông, Hà Nội</p>
+            <p class="footer_info-text">Đường dây nóng: +84 337 950 933</p>
+            <p class="footer_info-text">15A, Quốc lộ 1, Nghệ An</p>
           </div>
 
           <div class="footer_info-content">
@@ -140,10 +146,15 @@
           <div class="footer_info-content">
             <h4 class="footer_info-heading">KẾT NỐI VỚI CHÚNG TÔI</h4>
             <div class="footer_info-line"></div>
-            <a href="https://www.facebook.com/profile.php?id=61576996803922">
-              <img src="{{ asset('storage/products/Facebook_Logo_(2019).png') }}" alt="Facebook"
-                class="footer_info-logo max-w-[100px]">
+            <div style="display: flex; gap: 10px; align-items: center;">
+             <a href="https://www.facebook.com/profile.php?id=61576996803922" target="_blank">
+             <img src="{{ asset('assets/img/F_Logo.png') }}" alt="Facebook" class="footer_info-logo2">
+              </a>
+            <a href="https://zalo.me/0337950933" target="_blank">
+            <img src="{{ asset('assets/img/Z_Logo.webp') }}" alt="Zalo" class="footer_info-logo2">
             </a>
+          </div>
+
           </div>
         </div>
 
@@ -166,6 +177,7 @@
       </div>
     </footer>
 
-  
+<!-- Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

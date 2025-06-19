@@ -1,8 +1,11 @@
 @extends('layouts.app')
 
-
 @section('content')
+
+<!-- Google Font -->
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+
+<!-- Page CSS -->
 <style>
   .grid {
     width: 100%;
@@ -12,9 +15,11 @@
   }
 
   .intro_container {
-    margin-bottom: 40px;
+    margin-bottom: 30px;
   }
-
+  .intro_content {
+    padding-top: 20px;
+  }
   .intro_content-header {
     font-size: 24px;
     font-weight: 700;
@@ -102,50 +107,61 @@
   }
 </style>
 
+<!-- Content -->
 <div class="grid">
   <div class="intro_container">
+    <!-- Giới thiệu -->
     <div class="intro_content">
       <h2 class="intro_content-header">Về Teddy Paradise</h2>
       <div class="content_introduce">
         <div class="content_logo">
-          <img src="{{ asset('storage/products/Gemini_Generated_Image_opu087opu087opu0-fotor-20241009172321.jpg') }}" alt="" class="content_logo-image">
+          <img src="{{ asset('assets/img/LoGo.jpg') }}" alt="Logo Teddy Paradise" class="content_logo-image">
         </div>
         <div class="content_intro-text">
           <p class="content_intro-text-paragraph">
-            Teddy Paradise, một thương hiệu chuyên về gấu bông, ra đời vào ngày 12/10/2024 với sứ mệnh mang đến cho người tiêu dùng Việt Nam những chú gấu bông đáng yêu, chất lượng cao với giá cả cạnh tranh.
+            <strong>Teddy Paradise</strong> là ngôi nhà của những chú gấu bông mềm mại, ấm áp và đầy cảm xúc. Thành lập vào ngày <strong>12/10/2024</strong>, chúng tôi mang trong mình sứ mệnh lan tỏa yêu thương qua từng món quà nhỏ nhắn nhưng tràn đầy ý nghĩa.
           </p>
           <p class="content_intro-text-paragraph">
-            Với phương châm ‘Yêu thương - Chất Lượng’, Teddy Paradise luôn nỗ lực không ngừng trong việc phát triển và nâng cao chất lượng sản phẩm cũng như dịch vụ.
+            Với tinh thần “<em>Ôm trọn yêu thương – Gửi trọn tình cảm</em>”, Teddy Paradise không chỉ đơn thuần là cửa hàng gấu bông, mà là nơi gắn kết những tâm hồn thông qua các sản phẩm dễ thương, an toàn và chất lượng cao.
           </p>
           <p class="content_intro-text-paragraph">
-            Cam kết 100% sản phẩm gấu bông của chúng tôi đều an toàn, mềm mại, và bền bỉ.
+            Chúng tôi tự hào mang đến trải nghiệm mua sắm thân thiện, đáng tin cậy và dịch vụ tận tâm, để mỗi món quà bạn chọn đều trở thành một phần ký ức ngọt ngào.
           </p>
         </div>
       </div>
     </div>
 
+    <!-- Tầm nhìn - Giá trị -->
     <div class="intro_content">
       <h2 class="intro_content-header">Tầm nhìn - Giá trị cốt lõi</h2>
       <div class="intro_content-container">
         <div class="intro_content-container-half">
-          <h3 style="margin-top: 0;">Tầm nhìn</h3>
+          <h3 style="margin-top: 0;font-weight: bold;">Tầm nhìn</h3>
           <p>
-            Teddy Paradise hướng tới việc trở thành thương hiệu hàng đầu trong lĩnh vực quà tặng gấu bông.
+            Teddy Paradise hướng đến trở thành <strong>thương hiệu gấu bông và quà tặng được yêu thích nhất</strong> tại Việt Nam – nơi khách hàng luôn tìm thấy điều ngọt ngào và chân thành trong từng món quà.
           </p>
           <p>
-            Sứ mệnh là mang đến cho khách hàng những chú gấu bông độc đáo, chất lượng cao và tràn đầy ý nghĩa.
+            Chúng tôi mong muốn mỗi chú gấu bông không chỉ là một món đồ chơi, mà còn là người bạn đồng hành, là món quà lưu giữ kỷ niệm và cảm xúc.
           </p>
-          <h3 style="margin-top: 35px;">Giá trị</h3>
+
+          <h3 style="margin-top: 35px;font-weight: bold;">Giá trị</h3>
           <p>
-            Mỗi sản phẩm gấu bông đều được làm ra với sự chăm chút tỉ mỉ trong từng chi tiết.
+            <strong>Yêu thương – Tận tâm – Chất lượng – Sáng tạo</strong> là kim chỉ nam trong mọi hoạt động tại Teddy Paradise.
+          </p>
+          <p>
+            Từng sản phẩm đều được chăm chút kỹ lưỡng từ chất liệu đến thiết kế, đảm bảo an toàn cho mọi lứa tuổi và tạo nên trải nghiệm đáng nhớ cho người nhận.
           </p>
         </div>
         <div class="intro_content-container-half">
-          <img src="{{ asset('storage/products/DALL.png') }}" alt="" class="intro_content-container-img">
-          <img src="{{ asset('storage/products/20.10_Banner.jpg') }}" alt="" class="intro_content-container-img">
+          <img
+            src="{{ asset('assets/img/DALL.png') }}"
+            alt="Hình ảnh gấu bông Teddy Paradise"
+            class="intro_content-container-img"
+          >
         </div>
       </div>
     </div>
   </div>
 </div>
+
 @endsection
