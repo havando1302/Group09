@@ -76,7 +76,8 @@ Với mục tiêu giúp việc kinh doanh gấu bông trở nên hiện đại, 
 
 ## Cách Cài Đặt
  1. Clone repository từ GitHub:
-   https://github.com/havando1302/Group09.git
+  ```bash
+  https://github.com/havando1302/Group09.git
 
 
 
