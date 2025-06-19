@@ -51,6 +51,16 @@ Với mục tiêu giúp việc kinh doanh gấu bông trở nên hiện đại, 
 - Chức năng xem thông tin sẩn phẩm
 ![image](https://github.com/user-attachments/assets/305f9bdc-1a66-497e-af80-dc3e0402dbe6)
 
+- User thực hiện mua hàng
+![image](https://github.com/user-attachments/assets/58c11008-d950-49e5-b559-775f42ac7687)
+
+- Các chức năng chính của admin trong hệ thống
+![image](https://github.com/user-attachments/assets/bb7b3236-5430-4997-9ae5-b1eac5b3ca2f)
+
+- ERD dự án
+![image](https://github.com/user-attachments/assets/8e2e414c-ea0f-4c8d-b91d-a1b0a4a00c91)
+
+
 
 
 
