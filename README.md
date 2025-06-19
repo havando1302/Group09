@@ -37,7 +37,8 @@ Với mục tiêu giúp việc kinh doanh gấu bông trở nên hiện đại, 
 ![image](https://github.com/user-attachments/assets/0d82bf67-6c01-4276-9454-d0d3816c3135)
 
 - Quản lý sản phẩm
-![image](https://github.com/user-attachments/assets/f7fa8c08-d04c-40c3-949f-135414e9c9f1)
+![image](https://github.com/user-attachments/assets/2536048b-3e71-4eef-aa33-e71ace399fbd)
+
 
 
 
