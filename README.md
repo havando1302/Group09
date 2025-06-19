@@ -32,9 +32,8 @@ Với mục tiêu giúp việc kinh doanh gấu bông trở nên hiện đại, 
 ## UML & lưu đồ dự án
 - Biểu đồ Use Case tổng quan.
 - ![image](https://github.com/user-attachments/assets/9af4cb93-043f-4500-854d-0cb053224be3)
+
 - Quản lý giỏ hàng:
 ![image](https://github.com/user-attachments/assets/80e3c61a-0a23-4bd4-8f0f-80eba11490df)
-
-![image](https://github.com/user-attachments/assets/b6bf95ed-2195-4386-93d7-de979567ee7b)
 
 
