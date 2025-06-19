@@ -141,7 +141,7 @@
             <div class="footer_info-line"></div>
             <p class="footer_info-text">Số hotline được trực trong khung giờ từ 9h-17h mỗi T2 – T7 hàng tuần</p>
             <p class="footer_info-text">Đường dây nóng: +84 337 950 933</p>
-            <p class="footer_info-text">15A, Quốc lộ 1, Nghệ An</p>
+            <p class="footer_info-text">P. Nguyễn Trác, Yên Nghĩa, Hà Đông, Hà Nội</p>
           </div>
 
           <div class="footer_info-content">

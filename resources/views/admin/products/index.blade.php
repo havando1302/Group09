@@ -41,10 +41,17 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         @foreach($products as $product)
             <div class="bg-white rounded-lg shadow-lg p-4 flex flex-col">
-                {{-- Ảnh sản phẩm chính --}}
-                <img src="{{ $product->image_url ? Storage::url($product->image_url) : 'https://via.placeholder.com/150' }}"
-                     alt="{{ $product->name }}"
-                     class="w-full h-40 object-cover rounded-md mb-4">
+                 {{-- Ảnh sản phẩm chính --}}
+    <img 
+        src="{{ $product->image_url
+            ? (Str::startsWith($product->image_url, 'assets/') 
+                ? asset($product->image_url) 
+                : asset('storage/' . $product->image_url)) 
+            : 'https://via.placeholder.com/150' 
+        }}" 
+        alt="{{ $product->name }}"
+        class="w-full h-40 object-cover rounded-md mb-4"
+    >
 
                 {{-- Tên và giá --}}
                 <h3 class="text-lg font-semibold text-gray-800">{{ $product->name }}</h3>

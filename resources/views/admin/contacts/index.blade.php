@@ -33,7 +33,13 @@
         <div class="contact-card">
             <p><strong>Hotline:</strong> {{ $contact->hotline }}</p>
             <p><strong>Email:</strong> {{ $contact->email }}</p>
-            <p><strong>Facebook:</strong> <a href="{{ $contact->facebook }}" target="_blank">{{ $contact->facebook }}</a></p>
+            <p><strong>Facebook:</strong> 
+    <a href="{{ $contact->facebook }}" target="_blank">
+        {{ $contact->facebook_name }}
+    </a>
+</p>
+
+
             <p><strong>Địa chỉ:</strong> {{ $contact->address }}</p>
             <p><strong>Mô tả:</strong> {{ $contact->description }}</p>
 

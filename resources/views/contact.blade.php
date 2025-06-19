@@ -105,9 +105,14 @@
                             <p>{{ $contact->email }}</p>
                         </div>
                         <div class="contact-item">
-                            <p class="contact-label">📘 Facebook:</p>
-                            <p><a href="https://{{ $contact->facebook }}" target="_blank">{{ $contact->facebook }}</a></p>
-                        </div>
+    <p class="contact-label">📘 Facebook:</p>
+    <p>
+        <a href="{{ $contact->facebook }}" target="_blank">
+            Teddy Paradise
+        </a>
+    </p>
+</div>
+
                         <div class="contact-item">
                             <p class="contact-label">📍 Địa chỉ:</p>
                             <p>{{ $contact->address }}</p>

@@ -3,15 +3,40 @@
 @section('content')
     <div class="container mx-auto p-4">
         <h1 class="text-3xl font-bold mb-6">Tổng quan hệ thống</h1>
-        <form action="{{ route('admin.dashboard') }}" method="GET" class="mb-6 flex items-center space-x-4">
-    <label for="date" class="font-medium">Chọn ngày:</label>
-    <input type="date" name="date" id="date"
-        value="{{ request('date') }}"
-        class="border px-3 py-2 rounded shadow-sm focus:outline-none focus:ring">
-    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-        Lọc
-    </button>
+        <form action="{{ route('admin.dashboard') }}" method="GET" class="mb-6 flex flex-wrap items-center gap-4">
+    <div>
+        <label for="from" class="block text-sm font-medium text-gray-700">Từ ngày:</label>
+        <input type="date" name="from" id="from" value="{{ request('from') }}"
+            class="border px-3 py-2 rounded shadow-sm focus:outline-none focus:ring">
+    </div>
+
+    <div>
+        <label for="to" class="block text-sm font-medium text-gray-700">Đến ngày:</label>
+        <input type="date" name="to" id="to" value="{{ request('to') }}"
+            class="border px-3 py-2 rounded shadow-sm focus:outline-none focus:ring">
+    </div>
+
+    <div>
+        <label for="quick" class="block text-sm font-medium text-gray-700">Hoặc nhanh:</label>
+        <select name="quick" id="quick"
+            onchange="this.form.submit()"
+            class="border px-3 py-2 rounded shadow-sm focus:outline-none focus:ring">
+            <option value="">-- Chọn --</option>
+            <option value="today" {{ request('quick') == 'today' ? 'selected' : '' }}>Hôm nay</option>
+            <option value="yesterday" {{ request('quick') == 'yesterday' ? 'selected' : '' }}>Hôm qua</option>
+            <option value="last_7_days" {{ request('quick') == 'last_7_days' ? 'selected' : '' }}>7 ngày qua</option>
+            <option value="last_month" {{ request('quick') == 'last_month' ? 'selected' : '' }}>Tháng trước</option>
+        </select>
+    </div>
+
+    <div class="self-end">
+        <button type="submit"
+            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+            Lọc
+        </button>
+    </div>
 </form>
+
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
             <div class="bg-white shadow p-4 rounded">
