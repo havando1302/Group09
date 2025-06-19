@@ -42,6 +42,13 @@ Với mục tiêu giúp việc kinh doanh gấu bông trở nên hiện đại, 
 - Chức năng đăng nhập và đăng kí
 ![image](https://github.com/user-attachments/assets/16cbed88-9fdb-495b-aa2c-3a2bb49fd884)
 
+- Chức năng đăng xuất
+![image](https://github.com/user-attachments/assets/b9cc8414-bf30-4ee0-9a7f-c8eda2ffded6)
+
+- Chức năng yêu cầu đặt hàng
+![image](https://github.com/user-attachments/assets/4c3c666a-16ae-45c8-9475-48a361ae68fb)
+
+
 
 
 
