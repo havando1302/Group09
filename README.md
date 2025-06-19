@@ -63,7 +63,7 @@ Với mục tiêu giúp việc kinh doanh gấu bông trở nên hiện đại, 
 
 ## Slide & Báo Cáo
 
-https://cdn.fbsbx.com/v/t59.2708-21/508601888_685013264432266_7789023688205495300_n.pptx/NH%C3%93M-09-KTPM.pptx?_nc_cat=109&_nc_cb=47395efc-74c935b2&ccb=1-7&_nc_sid=2b0e22&_nc_eui2=AeETO5vJ7g2QzG59uVvdAWIdzBdzg-0KiQLMF3OD7QqJApvNijGa0nSShn7Bd7aRDpXWgkcW_hoDPJEN9wp6xOo0&_nc_ohc=s0zdCNqu-30Q7kNvwEfJw2J&_nc_oc=AdkbfcijRXOcMzsPw8nLhbwIrfPeL8HnmzoG59hTsF5eHyThJPci4LZIkY8yJCYO8pk&_nc_zt=7&_nc_ht=cdn.fbsbx.com&_nc_gid=YRWg391HDYH8WywVpnj28g&oh=03_Q7cD2gGdxZWOR_fgN33itv35Lrk8eFXANwLoeEvAnu01zt_wcg&oe=68564FAE&dl=1
+[NHÓM-09-KTPM (2).pptx](https://github.com/user-attachments/files/20824457/NHOM-09-KTPM.2.pptx)
 
 
 
