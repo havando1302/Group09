@@ -28,7 +28,7 @@ Với mục tiêu giúp việc kinh doanh gấu bông trở nên hiện đại, 
 - Tuần 5–7: Phát triển backend và frontend
 - Tuần 8: Kiểm thử và hoàn thiện tài liệu báo cáo
 ## Hướng phát triển
-- Nhằm hoàn thiện và nâng cấp hệ thống trong tương lai, nhóm đề xuất một số hướng phát triển như sau:
+-- Nhằm hoàn thiện và nâng cấp hệ thống trong tương lai, nhóm đề xuất một số hướng phát triển như sau:
  + Hoàn thiện tính năng và giao diện người dùng để phù hợp hơn với quy trình nghiệp vụ thực tế và thói quen mua sắm của người dùng hiện đại.
  + Tích hợp thanh toán trực tuyến: Áp dụng các phương thức thanh toán như ví điện tử (Momo, ZaloPay), thanh toán qua mã QR hoặc cổng VNPAY để nâng cao tính tiện lợi và chuyên nghiệp.
  + Cải thiện hệ thống quản trị và báo cáo: Bổ sung chức năng thống kê doanh thu, phân tích hành vi khách hàng, báo cáo bán hàng theo thời gian, sản phẩm hoặc khu vực.
