@@ -73,6 +73,9 @@ Với mục tiêu giúp việc kinh doanh gấu bông trở nên hiện đại, 
 [NHÓM-09-KTPM.pptx](https://github.com/user-attachments/files/20824481/NHOM-09-KTPM.pptx)
 
 
+[Báo-cáo-nhóm-9.docx](https://github.com/user-attachments/files/20831317/Bao-cao-nhom-9.docx)
+
+
 
 ## Cách Cài Đặt
  1. Clone repository từ GitHub:
